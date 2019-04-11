@@ -4,7 +4,11 @@ import Label from "../Label";
 import Input from "../Input";
 import GenderSelector from "../GenderSelector";
 import Button from "../Button";
+import Toast from "../Toast";
+import ImageScroller from "../ImageScroller";
+
 import User from "../../models/User";
+import Avatar from "../../models/Avatar";
 
 class NewUser extends Component {
   constructor(props) {
@@ -31,6 +35,7 @@ class NewUser extends Component {
     event.preventDefault();
     let user = this.state.user;
     user.gender = gender;
+    user.avatar = Avatar.getAll()[0];
     this.setState({
       user: user
     });
@@ -116,12 +121,22 @@ class NewUser extends Component {
             text="Voltar"
             onClick={event => {
               event.preventDefault();
+              let user = this.state.user;
+              user.avatar = Avatar.getAll()[0];
               this.setState({
+                user: user,
                 completedFirstView: false
               });
             }}
           />
-          <Button text="Salvar" main />
+          <Button
+            main
+            text="Salvar"
+            onClick={event => {
+              event.preventDefault();
+              this.props.onSubmit(this.state.user);
+            }}
+          />
         </section>
       );
     } else {
@@ -133,12 +148,36 @@ class NewUser extends Component {
     }
   }
 
+  renderAvatar() {
+    if (this.state.completedFirstView) {
+      return (
+        <section>
+          <Label text="Escolha seu avatar:" />
+          <ImageScroller
+            file="img/avatars.png"
+            y={this.state.user.gender === "m" ? 0 : 1}
+            images={Avatar.getAll()}
+            selectedImage={this.state.user.avatar}
+            onChange={avatar => {
+              let user = this.state.user;
+              user.avatar = avatar;
+              this.setState({ user: user });
+            }}
+          />
+        </section>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
       <div className="center">
         <form className="pure-form pure-form-stacked">
           {this.renderName()}
           {this.renderGender()}
+          {this.renderAvatar()}
           {this.renderButtons()}
         </form>
       </div>
