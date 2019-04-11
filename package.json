@@ -11,9 +11,12 @@
     "node": "11.10.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.3",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
-    "react-scripts": "2.1.5"
+    "react-scripts": "2.1.5",
+    "react-toastify": "^5.0.0",
+    "react-transition-group": "^2.9.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,6 +28,11 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "heroku-run-build-script": true
 }
